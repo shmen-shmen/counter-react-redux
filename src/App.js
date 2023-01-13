@@ -24,40 +24,41 @@ function App() {
 
 	return (
 		<section className="app-section">
-			<section className="header-section">
-				<h3>BOOK NAME :</h3>
-				<h1>Understanding Redux - 1</h1>
-				<h3>TOTAL TIME SPENT ON PROJECT :</h3>
-			</section>
+			<Header></Header>
 			<Counter stateObj={stateObj} setStateObj={setStateObj}></Counter>
-			<section className="buttons-wrapper">
-				<button onClick={addOrSubtract} data-todo={"add"}>
-					more▲▲▲
-				</button>
-				<button onClick={addOrSubtract} data-todo={"subtract"}>
-					less▽▽▽
-				</button>
-			</section>
+			<Buttons addOrSubtract={addOrSubtract}></Buttons>
 		</section>
 	);
 }
+
+const Header = () => {
+	return (
+		<section className="header-section">
+			<h3>BOOK NAME :</h3>
+			<h1>Understanding Redux - 1</h1>
+			<h3>TOTAL TIME SPENT ON PROJECT :</h3>
+		</section>
+	);
+};
 
 const Counter = (props) => {
 	const timeValues = Object.keys(props.stateObj).filter(
 		(key) => key !== "activeSession"
 	);
+
 	const sessionSelector = (e) => {
 		const newSession = e.target.innerHTML;
 		const newStateObj = { ...props.stateObj };
 		newStateObj["activeSession"] = newSession;
 		props.setStateObj(newStateObj);
 	};
+
 	return (
 		<section className="counter-section">
 			<div className="time-values-wrapper">
 				{timeValues.map((value) => {
 					return (
-						<div className="time-value" key={Math.random().toString()}>
+						<div className="time-value" key={Math.random().toString().slice(2)}>
 							<p className="big-number">{props.stateObj[value]}</p>
 							<p
 								className="number-label"
@@ -74,6 +75,19 @@ const Counter = (props) => {
 					);
 				})}
 			</div>
+		</section>
+	);
+};
+
+const Buttons = (props) => {
+	return (
+		<section className="buttons-wrapper">
+			<button onClick={props.addOrSubtract} data-todo={"add"}>
+				more▲▲▲
+			</button>
+			<button onClick={props.addOrSubtract} data-todo={"subtract"}>
+				less▽▽▽
+			</button>
 		</section>
 	);
 };
