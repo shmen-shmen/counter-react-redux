@@ -1,6 +1,9 @@
 :root {
 	--dark-color: rgb(4, 0, 43);
 	--lighter-color: rgb(4, 0, 43, 0.5);
+	--regular-size: 1.5rem;
+	--large-size: 2.5rem;
+	--huge-size: 5rem;
 }
 
 * {
@@ -12,23 +15,35 @@ body {
 	background-color: white;
 }
 
+/* *** */
+/* <Header> */
+/* *** */
 .header-section {
 	color: white;
 	background-color: var(--dark-color);
-	font-size: x-large;
 }
 .header-section h1,
 h3 {
-	padding: 0.5em;
+	padding: 0.25em;
 }
 
+.header-section h1 {
+	color: var(--dark-color);
+	font-size: var(--large-size);
+	background-color: white;
+}
+.header-section h3 {
+	font-size: var(--regular-size);
+}
+/* *** */
+/* END OF <Header> */
+/* *** */
+
+/* *** */
+/* <Counter> */
+/* *** */
 .counter-section {
 	width: 100%;
-}
-
-.counter-section h3 {
-	background-color: var(--dark-color);
-	color: white;
 }
 
 .time-values-wrapper {
@@ -44,7 +59,6 @@ h3 {
 	margin: 0px 20px 0px 20px;
 	color: var(--dark-color);
 	font-weight: 700;
-	font-size: clamp(10px, 0.5vw * 20, 100px);
 	display: flex;
 	flex-direction: column;
 }
@@ -56,21 +70,27 @@ h3 {
 
 .big-number {
 	text-align: left;
+	font-size: var(--huge-size);
 }
 
 .time-value .number-label {
-	font-size: clamp(10px, 0.5vw * 10, 25px);
+	font-size: var(--regular-size);
 }
+/* *** */
+/* END OF<Counter> */
+/* *** */
 
+/* *** */
+/* <Buttons> */
+/* *** */
 .buttons-wrapper {
 	display: flex;
 	justify-content: center;
-	/* padding-top: 10em; */
 	background-color: var(--dark-color);
 }
 
 .buttons-wrapper button {
-	font-size: 2em;
+	font-size: var(--regular-size);
 	background-color: var(--dark-color);
 	color: white;
 	border: none;
@@ -80,3 +100,6 @@ h3 {
 .buttons-wrapper button:hover {
 	color: red;
 }
+/* *** */
+/* END OF<Buttons> */
+/* *** */

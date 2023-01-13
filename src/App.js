@@ -26,9 +26,7 @@ function App() {
 		<section className="app-section">
 			<section className="header-section">
 				<h3>BOOK NAME :</h3>
-				<h1 style={{ backgroundColor: "white", color: "var(--dark-color)" }}>
-					Understanding Redux - 1
-				</h1>
+				<h1>Understanding Redux - 1</h1>
 				<h3>TOTAL TIME SPENT ON PROJECT :</h3>
 			</section>
 			<Counter stateObj={stateObj} setStateObj={setStateObj}></Counter>
