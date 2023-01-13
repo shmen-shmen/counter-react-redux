@@ -1,7 +1,9 @@
 import "./App.css";
 import { useState } from "react";
+import { store } from "./app/store.js";
 
 function App() {
+	const newStateObj = store.getState();
 	const [stateObj, setStateObj] = useState({
 		days: 11,
 		hours: 31,
@@ -11,15 +13,19 @@ function App() {
 	});
 
 	const addOrSubtract = (e) => {
-		const session = stateObj["activeSession"];
-		let number = stateObj[session];
-		let newStateObj = { ...stateObj };
-		if (e.target.getAttribute("data-todo") === "add") {
-			newStateObj[session] = number + 1;
-		} else {
-			newStateObj[session] = number - 1;
-		}
-		setStateObj(newStateObj);
+		const activeSession = newStateObj["activeSession"];
+		let value = newStateObj[activeSession];
+		const operation = e.target.getAttribute("data-operation");
+
+		operation === "plus" ? value++ : value--;
+
+		return store.dispatch({
+			type: "CHANGING_VALUE",
+			payload: {
+				session: activeSession,
+				newValue: value,
+			},
+		});
 	};
 
 	return (
@@ -42,15 +48,21 @@ const Header = () => {
 };
 
 const Counter = (props) => {
-	const timeValues = Object.keys(props.stateObj).filter(
+	const stateObj = store.getState();
+
+	const timeValues = Object.keys(stateObj).filter(
 		(key) => key !== "activeSession"
 	);
 
 	const sessionSelector = (e) => {
-		const newSession = e.target.innerHTML;
-		const newStateObj = { ...props.stateObj };
-		newStateObj["activeSession"] = newSession;
-		props.setStateObj(newStateObj);
+		const newActiveSession = e.target.innerHTML;
+
+		return store.dispatch({
+			type: "CHANGING_ACTIVE_SESSION",
+			payload: {
+				newActiveSession: newActiveSession,
+			},
+		});
 	};
 
 	return (
@@ -59,12 +71,12 @@ const Counter = (props) => {
 				{timeValues.map((value) => {
 					return (
 						<div className="time-value" key={Math.random().toString().slice(2)}>
-							<p className="big-number">{props.stateObj[value]}</p>
+							<p className="big-number">{stateObj[value]}</p>
 							<p
 								className="number-label"
 								onClick={sessionSelector}
 								style={
-									value === props.stateObj["activeSession"]
+									value === stateObj["activeSession"]
 										? { color: "red" }
 										: { color: "white" }
 								}
@@ -82,10 +94,10 @@ const Counter = (props) => {
 const Buttons = (props) => {
 	return (
 		<section className="buttons-wrapper">
-			<button onClick={props.addOrSubtract} data-todo={"add"}>
+			<button onClick={props.addOrSubtract} data-operation={"plus"}>
 				more▲▲▲
 			</button>
-			<button onClick={props.addOrSubtract} data-todo={"subtract"}>
+			<button onClick={props.addOrSubtract} data-operation={"minus"}>
 				less▽▽▽
 			</button>
 		</section>
